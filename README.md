@@ -2,6 +2,8 @@
 
 [![tests](https://github.com/Edward-Owusu/cmmc-readiness-toolkit/actions/workflows/tests.yml/badge.svg)](https://github.com/Edward-Owusu/cmmc-readiness-toolkit/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23176263.svg)](https://doi.org/10.5281/zenodo.23176263)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://cmmc-readiness-toolkit.streamlit.app)
 
 An open-source, guided self-assessment that helps **small defense suppliers** prepare for **CMMC Level 1**. A business owner or office manager answers 30 plain-language questions covering all 15 Level 1 requirements, and the toolkit produces a readiness result, a prioritized action plan with quick wins first, and a **draft System Security Plan** ready to review and complete.
 
@@ -60,6 +62,8 @@ Reports are written to the `reports` folder. Pre-generated reports and System Se
 pip install -r requirements.txt
 streamlit run app/streamlit_app.py
 ```
+
+Try the hosted version at https://cmmc-readiness-toolkit.streamlit.app, or run it locally:
 
 Work through the steps (company profile, six domains, results), then download your readiness report, draft System Security Plan, and answers file.
 
