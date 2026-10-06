@@ -1,0 +1,165 @@
+{
+  "organization": {
+    "name": "Your company",
+    "cage_code": "",
+    "employees": 0,
+    "description": "",
+    "system_name": "",
+    "system_boundary": "",
+    "fci_types": "",
+    "point_of_contact": "",
+    "senior_official": ""
+  },
+  "answers": {
+    "AC1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC1-3": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC2-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC2-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC3-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC3-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC4-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "AC4-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "IA1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "IA1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "IA2-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "IA2-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "MP1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "MP1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "PE1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "PE1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "PE2-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "PE2-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "PE2-3": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SC1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SC1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SC2-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI1-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI1-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI2-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI2-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI3-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI4-1": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    },
+    "SI4-2": {
+      "answer": "",
+      "note": "",
+      "evidence": ""
+    }
+  }
+}

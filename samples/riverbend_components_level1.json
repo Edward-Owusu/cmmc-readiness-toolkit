@@ -1,0 +1,153 @@
+{
+  "_comment": "Synthetic data for demonstration only. Not based on any real organization.",
+  "organization": {
+    "name": "Riverbend Components (fictional)",
+    "cage_code": "0XXX0",
+    "employees": 85,
+    "description": "Machines brackets and housings for a defense prime contractor under a subcontract that includes FAR 52.204-21.",
+    "system_name": "Riverbend business network",
+    "system_boundary": "Office and shop-floor Windows computers, one on-premises file server, Microsoft 365 email and file storage, and the office firewall.",
+    "fci_types": "Purchase orders, drawings marked for contract use, delivery schedules, and contract correspondence.",
+    "point_of_contact": "Jim Miller, IT Manager",
+    "senior_official": "Dana Reyes, President"
+  },
+  "answers": {
+    "AC1-1": {
+      "answer": "yes",
+      "note": "User accounts are managed in Microsoft 365 and on the domain controller; the IT manager keeps the list.",
+      "evidence": "Microsoft 365 user export"
+    },
+    "AC1-2": {
+      "answer": "partial",
+      "note": "Office computers are listed; shop-floor PCs and personal phones are not."
+    },
+    "AC1-3": {
+      "answer": "yes",
+      "note": "All computers require Windows sign-in; Microsoft 365 requires sign-in.",
+      "evidence": ""
+    },
+    "AC2-1": {
+      "answer": "no",
+      "note": "No written roles."
+    },
+    "AC2-2": {
+      "answer": "no",
+      "note": "Several office users have local administrator rights."
+    },
+    "AC3-1": {
+      "answer": "no"
+    },
+    "AC3-2": {
+      "answer": "no",
+      "note": "Employees use personal phones and home PCs for email without restriction."
+    },
+    "AC4-1": {
+      "answer": "yes",
+      "note": "The office manager approves website and social posts.",
+      "evidence": ""
+    },
+    "AC4-2": {
+      "answer": "partial",
+      "note": "Reviewed before posting, but no periodic review."
+    },
+    "IA1-1": {
+      "answer": "no",
+      "note": "Shop floor uses a shared 'floor.kiosk' login."
+    },
+    "IA1-2": {
+      "answer": "yes",
+      "note": "Devices are named by location.",
+      "evidence": ""
+    },
+    "IA2-1": {
+      "answer": "yes",
+      "note": "Passwords required for all accounts.",
+      "evidence": ""
+    },
+    "IA2-2": {
+      "answer": "partial",
+      "note": "Changed on computers but not on the shop printer and two network switches."
+    },
+    "MP1-1": {
+      "answer": "yes",
+      "note": "Old drives are drilled before disposal; paper goes to a shredding vendor.",
+      "evidence": "Shredding vendor certificates"
+    },
+    "MP1-2": {
+      "answer": "yes",
+      "note": "Computers are reimaged before reassignment.",
+      "evidence": ""
+    },
+    "PE1-1": {
+      "answer": "yes",
+      "note": "Office and server closet access limited to staff.",
+      "evidence": ""
+    },
+    "PE1-2": {
+      "answer": "yes",
+      "note": "Server closet is locked; office has keycard entry.",
+      "evidence": ""
+    },
+    "PE2-1": {
+      "answer": "yes",
+      "note": "Visitors are escorted.",
+      "evidence": ""
+    },
+    "PE2-2": {
+      "answer": "yes",
+      "note": "Front desk sign-in sheet.",
+      "evidence": "Visitor log binder"
+    },
+    "PE2-3": {
+      "answer": "partial",
+      "note": "Keycards are issued but not always collected from departing staff."
+    },
+    "SC1-1": {
+      "answer": "yes",
+      "note": "Office firewall at the internet edge.",
+      "evidence": ""
+    },
+    "SC1-2": {
+      "answer": "no",
+      "note": "Default rules; nobody reviews logs."
+    },
+    "SC2-1": {
+      "answer": "yes",
+      "note": "Website is hosted by an external provider; guest Wi-Fi is a separate network.",
+      "evidence": ""
+    },
+    "SI1-1": {
+      "answer": "yes",
+      "note": "Windows Update notifications are on.",
+      "evidence": ""
+    },
+    "SI1-2": {
+      "answer": "partial",
+      "note": "Office PCs update automatically; the file server and shop PCs are patched irregularly."
+    },
+    "SI2-1": {
+      "answer": "partial",
+      "note": "Two shop-floor PCs have no antivirus."
+    },
+    "SI2-2": {
+      "answer": "yes",
+      "note": "Microsoft 365 email filtering is on.",
+      "evidence": ""
+    },
+    "SI3-1": {
+      "answer": "yes",
+      "note": "Microsoft Defender updates automatically.",
+      "evidence": ""
+    },
+    "SI4-1": {
+      "answer": "yes",
+      "note": "Weekly full scan scheduled.",
+      "evidence": ""
+    },
+    "SI4-2": {
+      "answer": "yes",
+      "note": "Real-time protection on.",
+      "evidence": ""
+    }
+  }
+}

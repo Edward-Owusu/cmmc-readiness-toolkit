@@ -1,0 +1,164 @@
+{
+  "level": "CMMC Level 1",
+  "source": "Requirements from FAR 52.204-21(b)(1), as adopted for CMMC Level 1 in 32 CFR Part 170. Practice identifiers follow the CMMC Level 1 Assessment Guide. Questions are plain-language aids written for this tool, not official assessment objectives.",
+  "domains": {
+    "AC": "Access Control",
+    "IA": "Identification and Authentication",
+    "MP": "Media Protection",
+    "PE": "Physical Protection",
+    "SC": "System and Communications Protection",
+    "SI": "System and Information Integrity"
+  },
+  "practices": [
+    {
+      "id": "AC.L1-B.1.I", "domain": "AC", "title": "Authorized Access Control", "far": "52.204-21(b)(1)(i)", "nist_800_171": ["3.1.1"],
+      "requirement": "Limit information system access to authorized users, processes acting on behalf of authorized users, or devices (including other information systems).",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "AC1-1", "text": "Do you keep a current list of the people and service accounts allowed to use the systems that store or process Federal Contract Information (FCI)?", "evidence": "User list exported from your directory or a maintained spreadsheet."},
+        {"id": "AC1-2", "text": "Do you keep a list of the devices (computers, phones, servers) allowed to connect to those systems?", "evidence": "Device or asset inventory."},
+        {"id": "AC1-3", "text": "Does every system require a sign-in, so only those listed users and devices can get in?", "evidence": "Screenshots of sign-in settings; confirmation that guest or anonymous access is off."}
+      ],
+      "remediation": "Create and maintain a list of authorized users and devices, turn off guest and anonymous access, and require a sign-in on every system that holds FCI."
+    },
+    {
+      "id": "AC.L1-B.1.II", "domain": "AC", "title": "Transaction and Function Control", "far": "52.204-21(b)(1)(ii)", "nist_800_171": ["3.1.2"],
+      "requirement": "Limit information system access to the types of transactions and functions that authorized users are permitted to execute.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "AC2-1", "text": "Have you defined what each type of user is allowed to do (for example, only administrators can install software or change settings)?", "evidence": "Written roles or permission groups."},
+        {"id": "AC2-2", "text": "Are everyday users prevented from having administrator rights on their computers?", "evidence": "Local administrator group membership showing only IT staff."}
+      ],
+      "remediation": "Define user roles, remove administrator rights from everyday accounts, and give administrators a separate account for admin work."
+    },
+    {
+      "id": "AC.L1-B.1.III", "domain": "AC", "title": "External Connections", "far": "52.204-21(b)(1)(iii)", "nist_800_171": ["3.1.20"],
+      "requirement": "Verify and control/limit connections to and use of external information systems.",
+      "effort": "Project",
+      "questions": [
+        {"id": "AC3-1", "text": "Have you identified the outside systems people use for company work, such as personal devices, home computers, cloud services, and customer or partner portals?", "evidence": "List of approved external systems and services."},
+        {"id": "AC3-2", "text": "Do you control or limit those connections, for example by allowing company data only on approved devices and services?", "evidence": "Policy on personal devices and cloud services; device management or conditional access settings."}
+      ],
+      "remediation": "List the external systems and services in use, approve the ones that are needed, and block or restrict company data on everything else."
+    },
+    {
+      "id": "AC.L1-B.1.IV", "domain": "AC", "title": "Control Public Information", "far": "52.204-21(b)(1)(iv)", "nist_800_171": ["3.1.22"],
+      "requirement": "Control information posted or processed on publicly accessible information systems.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "AC4-1", "text": "Is there a named person who must approve what is posted on your website and social media?", "evidence": "Named approvers and a short posting procedure."},
+        {"id": "AC4-2", "text": "Is public content reviewed to make sure it contains no FCI, both before posting and periodically afterward?", "evidence": "Review checklist or records of reviews."}
+      ],
+      "remediation": "Name who may post public content, require review for FCI before anything is published, and check existing public content periodically."
+    },
+    {
+      "id": "IA.L1-B.1.V", "domain": "IA", "title": "Identification", "far": "52.204-21(b)(1)(v)", "nist_800_171": ["3.5.1"],
+      "requirement": "Identify information system users, processes acting on behalf of users, or devices.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "IA1-1", "text": "Does every person have their own user account, with no shared logins?", "evidence": "User account list showing one account per person."},
+        {"id": "IA1-2", "text": "Are devices and service accounts uniquely named and recorded in your inventory or directory?", "evidence": "Device inventory and list of service accounts."}
+      ],
+      "remediation": "Replace shared logins with individual accounts and record every device and service account with a unique name."
+    },
+    {
+      "id": "IA.L1-B.1.VI", "domain": "IA", "title": "Authentication", "far": "52.204-21(b)(1)(vi)", "nist_800_171": ["3.5.2"],
+      "requirement": "Authenticate (or verify) the identities of those users, processes, or devices, as a prerequisite to allowing access to organizational information systems.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "IA2-1", "text": "Must every user prove who they are, with a password or something stronger, before getting access?", "evidence": "Sign-in and password policy settings."},
+        {"id": "IA2-2", "text": "Are default passwords on new devices, software, and equipment changed before they are used?", "evidence": "Setup checklist that includes changing default passwords."}
+      ],
+      "remediation": "Require authentication on every system and change all default passwords; adding multi-factor authentication is strongly recommended and is required at Level 2."
+    },
+    {
+      "id": "MP.L1-B.1.VII", "domain": "MP", "title": "Media Disposal", "far": "52.204-21(b)(1)(vii)", "nist_800_171": ["3.8.3"],
+      "requirement": "Sanitize or destroy information system media containing Federal Contract Information before disposal or release for reuse.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "MP1-1", "text": "Before throwing away hard drives, USB drives, phones, or paper containing FCI, do you securely wipe or destroy them?", "evidence": "Disposal procedure and destruction certificates or log."},
+        {"id": "MP1-2", "text": "Before a computer or drive is given to someone else or reused, is it securely wiped?", "evidence": "Wipe procedure and records."}
+      ],
+      "remediation": "Adopt a simple disposal procedure: wipe with an approved tool or physically destroy media, use a certified shredding vendor for paper, and keep a log."
+    },
+    {
+      "id": "PE.L1-B.1.VIII", "domain": "PE", "title": "Limit Physical Access", "far": "52.204-21(b)(1)(viii)", "nist_800_171": ["3.10.1"],
+      "requirement": "Limit physical access to organizational information systems, equipment, and the respective operating environments to authorized individuals.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "PE1-1", "text": "Have you decided who is allowed into the areas where your computers, servers, and network equipment are kept?", "evidence": "List of people with access to offices and equipment rooms."},
+        {"id": "PE1-2", "text": "Are those areas physically protected, for example with locked doors, badge access, or a locked server closet?", "evidence": "Photos or description of locks and access controls."}
+      ],
+      "remediation": "Define who may enter office and equipment areas, and lock the server or network closet and any area where FCI is handled."
+    },
+    {
+      "id": "PE.L1-B.1.IX", "domain": "PE", "title": "Manage Visitors and Physical Access", "far": "52.204-21(b)(1)(ix)", "nist_800_171": ["3.10.3", "3.10.4", "3.10.5"],
+      "requirement": "Escort visitors and monitor visitor activity; maintain audit logs of physical access; and control and manage physical access devices.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "PE2-1", "text": "Are visitors escorted and supervised while they are in areas with company systems or FCI?", "evidence": "Visitor procedure."},
+        {"id": "PE2-2", "text": "Do you keep a visitor log or another record of who entered the facility and when?", "evidence": "Visitor sign-in log or badge system records."},
+        {"id": "PE2-3", "text": "Do you control keys, badges, and lock combinations: knowing who has them, collecting them when people leave, and changing combinations when needed?", "evidence": "Key and badge issuance list."}
+      ],
+      "remediation": "Escort visitors, keep a sign-in log, and track who holds keys and badges, collecting them at departure."
+    },
+    {
+      "id": "SC.L1-B.1.X", "domain": "SC", "title": "Boundary Protection", "far": "52.204-21(b)(1)(x)", "nist_800_171": ["3.13.1"],
+      "requirement": "Monitor, control, and protect organizational communications (i.e., information transmitted or received by organizational information systems) at the external boundaries and key internal boundaries of the information systems.",
+      "effort": "Project",
+      "questions": [
+        {"id": "SC1-1", "text": "Is there a firewall between your internal network and the internet?", "evidence": "Network diagram showing the firewall."},
+        {"id": "SC1-2", "text": "Is the firewall set to block unnecessary incoming traffic, and are its settings and logs reviewed?", "evidence": "Firewall rule export and review records."}
+      ],
+      "remediation": "Put a business-grade firewall at the internet edge, block all inbound traffic that is not needed, and review its rules and alerts regularly."
+    },
+    {
+      "id": "SC.L1-B.1.XI", "domain": "SC", "title": "Public-Access System Separation", "far": "52.204-21(b)(1)(xi)", "nist_800_171": ["3.13.5"],
+      "requirement": "Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks.",
+      "effort": "Project",
+      "questions": [
+        {"id": "SC2-1", "text": "If you run anything the public can reach (such as a website, file sharing server, or guest Wi-Fi), is it kept separate from your internal network, for example on its own network segment, a separate guest network, or hosted by a provider? Answer N/A only if you run nothing public-facing.", "evidence": "Network diagram showing the separate segment or hosted service."}
+      ],
+      "remediation": "Move public-facing services to a separate network segment or an external host, and put guest Wi-Fi on its own isolated network."
+    },
+    {
+      "id": "SI.L1-B.1.XII", "domain": "SI", "title": "Flaw Remediation", "far": "52.204-21(b)(1)(xii)", "nist_800_171": ["3.14.1"],
+      "requirement": "Identify, report, and correct information and information system flaws in a timely manner.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "SI1-1", "text": "Do you have a way to learn about security flaws in the products you use, such as automatic update notices or vendor alerts?", "evidence": "Update settings and subscribed vendor alerts."},
+        {"id": "SI1-2", "text": "Do you install security updates for operating systems and software within a set time frame?", "evidence": "Patch schedule and update history."}
+      ],
+      "remediation": "Turn on automatic updates where possible, subscribe to vendor security alerts, and set a time frame for installing critical updates."
+    },
+    {
+      "id": "SI.L1-B.1.XIII", "domain": "SI", "title": "Malicious Code Protection", "far": "52.204-21(b)(1)(xiii)", "nist_800_171": ["3.14.2"],
+      "requirement": "Provide protection from malicious code at appropriate locations within organizational information systems.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "SI2-1", "text": "Is antivirus or endpoint protection installed on every computer and server?", "evidence": "Endpoint protection console showing all devices."},
+        {"id": "SI2-2", "text": "Is incoming email filtered for malware and phishing?", "evidence": "Email security settings."}
+      ],
+      "remediation": "Deploy endpoint protection on every computer and server, and turn on malware and phishing filtering for email."
+    },
+    {
+      "id": "SI.L1-B.1.XIV", "domain": "SI", "title": "Update Malicious Code Protection", "far": "52.204-21(b)(1)(xiv)", "nist_800_171": ["3.14.4"],
+      "requirement": "Update malicious code protection mechanisms when new releases are available.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "SI3-1", "text": "Does your antivirus or endpoint protection update itself automatically when new versions and definitions are released?", "evidence": "Update settings and last-update dates in the console."}
+      ],
+      "remediation": "Turn on automatic updates for endpoint protection and check the console for devices that are out of date."
+    },
+    {
+      "id": "SI.L1-B.1.XV", "domain": "SI", "title": "System and File Scanning", "far": "52.204-21(b)(1)(xv)", "nist_800_171": ["3.14.5"],
+      "requirement": "Perform periodic scans of the information system and real-time scans of files from external sources as files are downloaded, opened, or executed.",
+      "effort": "Quick win",
+      "questions": [
+        {"id": "SI4-1", "text": "Does your antivirus run scheduled full scans of computers and servers?", "evidence": "Scan schedule settings."},
+        {"id": "SI4-2", "text": "Does it scan files in real time as they are downloaded, opened, or run, including files from USB drives and email?", "evidence": "Real-time protection settings."}
+      ],
+      "remediation": "Schedule regular full scans and make sure real-time protection is on for downloads, removable media, and email attachments."
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "_comment": "Synthetic data for demonstration only. Not based on any real organization.",
+  "organization": {
+    "name": "Keystone Precision Machining (fictional)",
+    "cage_code": "0YYY0",
+    "employees": 40,
+    "description": "Precision machining subcontractor supporting two defense prime contractors.",
+    "system_name": "Keystone corporate network",
+    "system_boundary": "Managed Windows laptops and desktops, Microsoft 365 tenant, and a managed firewall. No on-premises servers.",
+    "fci_types": "Purchase orders, contract correspondence, and delivery schedules.",
+    "point_of_contact": "Priya Nair, Operations Manager",
+    "senior_official": "Marcus Bell, Owner"
+  },
+  "answers": {
+    "AC1-1": {
+      "answer": "yes",
+      "note": "Authorized users are managed in Microsoft Entra ID; access is reviewed quarterly."
+    },
+    "AC1-2": {
+      "answer": "yes",
+      "note": "All devices are enrolled in Intune; unenrolled devices are blocked."
+    },
+    "AC1-3": {
+      "answer": "yes",
+      "note": "Conditional access requires sign-in with MFA from compliant devices."
+    },
+    "AC2-1": {
+      "answer": "yes",
+      "note": "Roles are defined for staff, managers, and IT administrators."
+    },
+    "AC2-2": {
+      "answer": "yes",
+      "note": "Standard users have no local administrator rights; IT uses separate admin accounts."
+    },
+    "AC3-1": {
+      "answer": "yes",
+      "note": "Approved external systems are listed in the IT policy."
+    },
+    "AC3-2": {
+      "answer": "yes",
+      "note": "Company data is accessible only from managed devices; personal devices are blocked."
+    },
+    "AC4-1": {
+      "answer": "yes",
+      "note": "The owner approves all public posts."
+    },
+    "AC4-2": {
+      "answer": "yes",
+      "note": "Public content is reviewed before posting and every quarter."
+    },
+    "IA1-1": {
+      "answer": "yes",
+      "note": "Every employee has an individual account; shared accounts are prohibited."
+    },
+    "IA1-2": {
+      "answer": "yes",
+      "note": "Devices and service accounts are named and recorded in Intune and Entra ID."
+    },
+    "IA2-1": {
+      "answer": "yes",
+      "note": "Passwords plus MFA are required for every account."
+    },
+    "IA2-2": {
+      "answer": "yes",
+      "note": "Default passwords are changed as part of the device setup checklist."
+    },
+    "MP1-1": {
+      "answer": "yes",
+      "note": "Drives are destroyed by a certified vendor; certificates are kept."
+    },
+    "MP1-2": {
+      "answer": "yes",
+      "note": "Devices are wiped through Intune before reassignment."
+    },
+    "PE1-1": {
+      "answer": "yes",
+      "note": "Only staff may enter the office; the network closet is limited to IT."
+    },
+    "PE1-2": {
+      "answer": "yes",
+      "note": "Badge access to the office; the network closet is locked."
+    },
+    "PE2-1": {
+      "answer": "yes",
+      "note": "Visitors are escorted at all times."
+    },
+    "PE2-2": {
+      "answer": "yes",
+      "note": "Visitors sign in electronically at reception."
+    },
+    "PE2-3": {
+      "answer": "yes",
+      "note": "Badges are tracked and collected at departure."
+    },
+    "SC1-1": {
+      "answer": "yes",
+      "note": "A managed firewall sits at the internet edge."
+    },
+    "SC1-2": {
+      "answer": "yes",
+      "note": "Inbound traffic is denied by default; the managed service provider reviews alerts daily."
+    },
+    "SC2-1": {
+      "answer": "yes",
+      "note": "Website is hosted externally; guest Wi-Fi is isolated."
+    },
+    "SI1-1": {
+      "answer": "yes",
+      "note": "Vendor security alerts are subscribed; Intune reports missing updates."
+    },
+    "SI1-2": {
+      "answer": "yes",
+      "note": "Critical updates are installed within 14 days through Intune."
+    },
+    "SI2-1": {
+      "answer": "yes",
+      "note": "Microsoft Defender for Endpoint on all devices."
+    },
+    "SI2-2": {
+      "answer": "yes",
+      "note": "Microsoft Defender for Office 365 filters email."
+    },
+    "SI3-1": {
+      "answer": "yes",
+      "note": "Defender updates automatically."
+    },
+    "SI4-1": {
+      "answer": "yes",
+      "note": "Weekly full scans are scheduled."
+    },
+    "SI4-2": {
+      "answer": "yes",
+      "note": "Real-time protection is enforced by policy."
+    }
+  }
+}
