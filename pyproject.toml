@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cmmc-kit"
-version = "0.1.0"
+version = "0.2.0"
 description = "CMMC Level 1 guided self-assessment and draft System Security Plan for small defense suppliers"
 readme = "README.md"
 requires-python = ">=3.10"
