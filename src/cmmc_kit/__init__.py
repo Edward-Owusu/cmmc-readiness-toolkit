@@ -2,5 +2,5 @@
 
 from .engine import evaluate, load_answers, load_practices, parse_answers
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = ["evaluate", "load_answers", "load_practices", "parse_answers", "__version__"]
