@@ -1,19 +1,25 @@
 """Guided CMMC Level 1 self-assessment questionnaire.
 
 Run locally:   streamlit run app/streamlit_app.py
+
+Layout: no sidebar. A step tracker across the top shows each domain and how much of it is answered;
+the questionnaire runs one domain per page with Back and Next buttons.
 """
 
 from __future__ import annotations
 
 import json
 import sys
+from html import escape
 from pathlib import Path
 
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import ui  # noqa: E402
 from cmmc_kit import __version__, evaluate, load_practices, parse_answers  # noqa: E402
 from cmmc_kit.engine import MET, DataError  # noqa: E402
 from cmmc_kit.reporting import DISCLAIMER, ssp_html, ssp_markdown, to_csv, to_html  # noqa: E402
@@ -22,6 +28,7 @@ S = ROOT / "samples"
 CATALOG = load_practices()
 DOMAINS = list(CATALOG["domains"].items())  # [(code, name), ...]
 STEPS = ["Company profile"] + [name for _, name in DOMAINS] + ["Results"]
+SHORT = ["Profile"] + [code for code, _ in DOMAINS] + ["Results"]
 LABELS = {"yes": "Yes", "partial": "Partly", "no": "No", "na": "N/A"}
 REVERSE = {v: k for k, v in LABELS.items()}
 ORG_FIELDS = [
@@ -38,8 +45,18 @@ SOURCES = {
     "Sample: small manufacturer with gaps (fictional)": S / "riverbend_components_level1.json",
     "Sample: machining shop, fully met (fictional)": S / "keystone_precision_level1.json",
 }
+PAL = ui.Palette(accent="#B5C18E", band="#262B1D", band_text="#F2F4EA", band_sub="#C3C8B2",
+                 card="#2B3122", line="#434B35", ink="#E8EADF", muted="#A9AF98")
+STATUS_COLOR = {MET: "#7FB069", "NOT MET": "#D9534F", "INCOMPLETE": "#C9A227"}
 
-st.set_page_config(page_title="CMMC Readiness Toolkit", page_icon="🛡️", layout="centered")
+ui.setup("CMMC Level 1 readiness", "Defense supply chain · 15 practices · FAR 52.204-21",
+         "A guided self-assessment for small defense suppliers. Answer plain-language questions for each "
+         "domain, then get a readiness result, a prioritized action plan and a draft System Security Plan.",
+         "🛡️", PAL)
+st.markdown("""<style>
+.stButton button { width: 100%; }
+.q-card { background:#2B3122; border:1px solid #434B35; border-radius:12px; padding:14px 16px 4px; margin-bottom:12px; }
+</style>""", unsafe_allow_html=True)
 
 
 # ----- state helpers -------------------------------------------------------------------------------
@@ -85,53 +102,79 @@ def current_result():
     return evaluate(parse_answers(json.dumps(store)))
 
 
-# ----- sidebar -------------------------------------------------------------------------------------
 
-with st.sidebar:
-    st.header("CMMC Level 1")
-    st.radio("Start from", list(SOURCES), key="source", on_change=on_source_change)
-    up = st.file_uploader("Or resume from saved answers (.json)", type=["json"])
-    if up is not None and st.button("Load saved answers"):
-        try:
-            load_doc(parse_answers(up.getvalue().decode("utf-8-sig")))
-            go(len(STEPS) - 1)
-            st.rerun()
-        except DataError as exc:
-            st.error(f"That file could not be read. {exc}")
-    res = current_result()
-    st.progress(res.answered_pct / 100, text=f"{res.answered_pct:.0f}% answered")
-    st.caption(f"Practices met so far: {res.met} of {res.total}")
-    st.divider()
-    for i, name in enumerate(STEPS):
-        st.button(("▶ " if i == st.session_state.step else "") + f"{i + 1}. {name}", key=f"nav_{i}",
-                  on_click=go, args=(i,))
-    st.caption(f"cmmc_kit {__version__}. Answers stay in this browser session; download them to save your progress.")
+def domain_progress(code: str) -> tuple[int, int]:
+    qids = [q["id"] for p in CATALOG["practices"] if p["domain"] == code for q in p["questions"]]
+    done = sum(1 for q in qids if store["answers"].get(q, {}).get("answer"))
+    return done, len(qids)
 
-# ----- main ----------------------------------------------------------------------------------------
+
+def load_upload() -> None:
+    up = st.session_state.get("resume_file")
+    if up is None:
+        return
+    try:
+        load_doc(parse_answers(up.getvalue().decode("utf-8-sig")))
+        go(len(STEPS) - 1)
+    except DataError as exc:
+        st.session_state.load_error = f"That file could not be read. {exc}"
+
+
+# ----- top row: where to start, resume, progress ---------------------------------------------------
+
+res = current_result()
+t1, t2, t3 = st.columns([2.4, 1.1, 2.2], vertical_alignment="top")
+with t1:
+    st.selectbox("Start from", list(SOURCES), key="source", on_change=on_source_change)
+with t2:
+    with st.popover("Resume saved answers", use_container_width=True):
+        st.file_uploader("Saved answers (.json)", type=["json"], key="resume_file")
+        st.button("Load saved answers", on_click=load_upload, type="primary")
+with t3:
+    st.progress(res.answered_pct / 100,
+                text=f"{res.answered_pct:.0f}% answered · {res.met} of {res.total} practices met")
+if st.session_state.get("load_error"):
+    st.error(st.session_state.pop("load_error"))
+
+# ----- step tracker --------------------------------------------------------------------------------
 
 step = st.session_state.step
-st.caption(f"STEP {step + 1} OF {len(STEPS)}")
-st.title(STEPS[step])
+cols = st.columns(len(STEPS))
+for i, (col, short) in enumerate(zip(cols, SHORT)):
+    if 0 < i < len(STEPS) - 1:
+        done, total = domain_progress(DOMAINS[i - 1][0])
+        mark = "✓ " if done == total else f"{done}/{total} "
+    else:
+        mark = ""
+    col.button(f"{mark}{short}", key=f"nav_{i}", on_click=go, args=(i,),
+               type="primary" if i == step else "secondary", help=STEPS[i])
+
+st.markdown(f"<div class='g-sec'>Step {step + 1} of {len(STEPS)} · {escape(STEPS[step])}</div>",
+            unsafe_allow_html=True)
 
 if step == 0:
-    st.write("This guided questionnaire walks a small defense supplier through the 15 CMMC Level 1 "
-             "requirements in plain language. At the end you get a readiness result, a prioritized action "
-             "plan, and a draft System Security Plan to download.")
-    for field, label, kind in ORG_FIELDS:
+    st.write("This questionnaire walks you through the 15 CMMC Level 1 requirements in plain language. "
+             "Start with the company details below; they go into the draft System Security Plan.")
+    c1, c2 = st.columns(2)
+    for n, (field, label, kind) in enumerate(ORG_FIELDS):
         val = str(store["organization"].get(field, "") or "")
+        target = st if kind == "area" else (c1 if n % 2 == 0 else c2)
         if kind == "area":
-            st.text_area(label, value=val, key=f"o_{field}", on_change=save_org, args=(field,), height=80)
+            target.text_area(label, value=val, key=f"o_{field}", on_change=save_org, args=(field,), height=80)
         else:
-            st.text_input(label, value=val, key=f"o_{field}", on_change=save_org, args=(field,))
+            target.text_input(label, value=val, key=f"o_{field}", on_change=save_org, args=(field,))
 
 elif step < len(STEPS) - 1:
     code = DOMAINS[step - 1][0]
-    st.write("Answer each question for the systems that handle Federal Contract Information. Choose **Partly** if "
-             "something is only done in some places. Use **N/A** only when the item truly does not apply, and "
-             "explain why in the note.")
+    st.caption("Answer for the systems that handle Federal Contract Information. Choose Partly if something is "
+               "only done in some places. Use N/A only when the item truly does not apply, and explain why in "
+               "the note.")
     for p in [x for x in CATALOG["practices"] if x["domain"] == code]:
         with st.container(border=True):
-            st.markdown(f"#### {p['id']} · {p['title']}")
+            pr = next((r for r in res.practices if r.id == p["id"]), None)
+            status = ui.pill(pr.status.lower(), STATUS_COLOR.get(pr.status, "#777")) if pr else ""
+            st.markdown(f"<div class='h' style='font-size:17px;font-weight:650'>{status}{escape(p['id'])} · "
+                        f"{escape(p['title'])}</div>", unsafe_allow_html=True)
             st.caption(f"Requirement: {p['requirement']}")
             for q in p["questions"]:
                 saved = store["answers"].get(q["id"], {})
@@ -144,11 +187,11 @@ elif step < len(STEPS) - 1:
                               on_change=save_note, args=(q["id"],), placeholder=f"Evidence to keep: {q['evidence']}")
 
 else:
-    res = current_result()
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Practices met", f"{res.met} of {res.total}")
-    c2.metric("Questions answered", f"{res.answered_pct:.0f}%")
-    c3.metric("Quick wins left", sum(1 for p in res.actions() if p.effort == "Quick win"))
+    quick = sum(1 for p in res.actions() if p.effort == "Quick win")
+    ui.tiles([(f"{res.met} of {res.total}", "Practices met", "#7FB069" if res.ready_to_affirm else "#D9534F"),
+              (f"{res.answered_pct:.0f}%", "Questions answered"),
+              (quick, "Quick wins left", "#C9A227"),
+              (len(res.actions()) - quick, "Projects left", "#D9534F")], PAL)
     if res.ready_to_affirm:
         st.success("All 15 Level 1 practices are met. You appear ready for the annual self-assessment and the "
                    "senior official's affirmation in SPRS.")
@@ -156,39 +199,48 @@ else:
         st.error(f"Not yet ready: {res.total - res.met} practice(s) need work. Every Level 1 practice must be fully "
                  "met before affirming; open action plans are not allowed at Level 1.")
 
-    st.markdown("### Progress by domain")
-    for d in res.domains():
-        st.progress(d["met"] / d["total"], text=f"{d['name']}: {d['met']} of {d['total']}")
+    ui.section("Readiness by domain")
+    dcols = st.columns(3)
+    for n, d in enumerate(res.domains()):
+        pct = 100 * d["met"] / d["total"]
+        color = "#7FB069" if d["met"] == d["total"] else ("#C9A227" if d["met"] else "#D9534F")
+        dcols[n % 3].markdown(
+            f"<div class='g-tile' style='border-top-color:{color};margin-bottom:10px'>"
+            f"<b>{d['met']}/{d['total']}</b><span>{escape(d['domain'])} · {escape(d['name'])}</span>"
+            f"{ui.bar(pct, color)}</div>", unsafe_allow_html=True)
 
-    st.markdown("### Action plan")
+    ui.section("Action plan", "Quick wins first, then projects.")
     acts = res.actions()
     if not acts:
         st.write("Nothing left to fix. Keep your evidence current and reassess every year.")
     for p in acts:
-        tag = "🟢 Quick win" if p.effort == "Quick win" else "🛠️ Project"
-        with st.expander(f"{tag} · {p.id} {p.title} ({p.status.lower()})"):
-            for g in p.gaps:
-                st.markdown(f"- **{g['issue']}** {g['text']}" + (f"  \n  *{g['note']}*" if g.get("note") else ""))
-            if p.unanswered:
-                st.markdown(f"- Not answered yet: {', '.join(p.unanswered)}")
-            st.markdown(f"**Fix:** {p.remediation}")
+        tag = ui.pill("Quick win", "#7FB069") if p.effort == "Quick win" else ui.pill("Project", "#8C6D46")
+        body = "".join(f"<div class='d'><b>{escape(g['issue'])}</b> {escape(g['text'])}"
+                       + (f"<br><i class='s'>{escape(g['note'])}</i>" if g.get("note") else "") + "</div>"
+                       for g in p.gaps)
+        if p.unanswered:
+            body += f"<div class='s'>Not answered yet: {escape(', '.join(p.unanswered))}</div>"
+        body += f"<div class='f'><b>Fix:</b> {escape(p.remediation)}</div>"
+        ui.card(f"<div class='h'>{tag}{ui.pill(p.status.lower(), STATUS_COLOR.get(p.status, '#777'))}"
+                f"{escape(p.id)} · {escape(p.title)}</div>", body, accent=STATUS_COLOR.get(p.status))
 
-    st.markdown("### Downloads")
     org = (store["organization"].get("name") or "company").replace(" ", "_")
-    d1, d2 = st.columns(2)
-    d1.download_button("📄 Readiness report (HTML)", to_html(res), f"{org}_cmmc_l1_readiness.html", "text/html")
-    d2.download_button("📘 Draft System Security Plan (HTML)", ssp_html(res), f"{org}_ssp_draft.html", "text/html")
-    d3, d4 = st.columns(2)
-    d3.download_button("📝 Draft SSP (Markdown, editable)", ssp_markdown(res), f"{org}_ssp_draft.md",
-                       "text/markdown")
-    d4.download_button("💾 Save my answers (JSON)", json.dumps(store, indent=2), f"{org}_cmmc_answers.json",
-                       "application/json")
-    st.download_button("Practice status (CSV)", to_csv(res), f"{org}_cmmc_l1_status.csv", "text/csv")
-    st.caption(DISCLAIMER)
+    ui.downloads([("Readiness report (HTML)", to_html(res), f"{org}_cmmc_l1_readiness.html", "text/html"),
+                  ("Draft SSP (HTML)", ssp_html(res), f"{org}_ssp_draft.html", "text/html"),
+                  ("Draft SSP (Markdown)", ssp_markdown(res), f"{org}_ssp_draft.md", "text/markdown")])
+    s1, s2 = st.columns(2)
+    s1.download_button("Save my answers (JSON)", json.dumps(store, indent=2), f"{org}_cmmc_answers.json",
+                       "application/json", use_container_width=True)
+    s2.download_button("Practice status (CSV)", to_csv(res), f"{org}_cmmc_l1_status.csv", "text/csv",
+                       use_container_width=True)
 
-st.divider()
-b1, _, b2 = st.columns([1, 2, 1])
+st.write("")
+b1, _, b2 = st.columns([1, 3, 1])
 if step > 0:
-    b1.button("← Back", on_click=go, args=(step - 1,))
+    b1.button("← Back", on_click=go, args=(step - 1,), use_container_width=True)
 if step < len(STEPS) - 1:
-    b2.button("Next →", on_click=go, args=(step + 1,), type="primary")
+    b2.button(f"Next: {SHORT[step + 1]} →", on_click=go, args=(step + 1,), type="primary",
+              use_container_width=True)
+
+ui.footer("cmmc_kit", __version__, "cmmc-readiness-toolkit",
+          DISCLAIMER + " Answers stay in this browser session; download them to save your progress.")
